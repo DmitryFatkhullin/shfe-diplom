@@ -18,17 +18,17 @@
     </header>
     <main class="col-md-9 container container-admin-dashboard">
         <section class="admin-section">
-            <h2 class="admin-dashboard-section__title">
+            <div class="admin-dashboard-section__title">
                 <div class="admin-dashboard-section__title-text">УПРАВЛЕНИЕ ЗАЛАМИ</div>
-            </h2>
+            </div>
             <p class="admin-dashboard-section__text">Доступные залы:</p>
             <div class="halls-list" id="halls-list"></div>
             <button class="btn btn--primary" data-bs-toggle="modal" data-bs-target="#addHallModal">СОЗДАТЬ ЗАЛ</button>
         </section>
         <section class="admin-section">
-            <h2 class="admin-dashboard-section__title">
+            <div class="admin-dashboard-section__title">
                 <div class="admin-dashboard-section__title-text">КОНФИГУРАЦИЯ ЗАЛОВ</div>
-            </h2>
+            </div>
             <div>
                 <p class="admin-dashboard-section__text">Выберите зал для конфигурации:</p>
                 <div class="row admin-dashboard-section-row-tabs">
@@ -50,6 +50,7 @@
                             <label class="admin-dashboard-section__hall-text">Мест, шт</label>
                             <input type="number" id="config-places" class="form-control-dashboard">
                         </div>
+                    </div>
                     </div>
                     <div class="mt-3">
                         <p class="admin-dashboard-section__hall-text-before-hall-scheme">Теперь вы можете указать типы
@@ -78,12 +79,16 @@
                                         </div>
                                     </div>
                                 </div>
+                              
+                            </div>
+                            </div>
+                            </div>
                             </div>
         </section>
         <section class="admin-section">
-            <h2 class="admin-dashboard-section__title">
+            <div class="admin-dashboard-section__title">
                 <div class="admin-dashboard-section__title-text">КОНФИГУРАЦИЯ ЦЕН</div>
-            </h2>
+            </div>
             <div class="row admin-dashboard-section">
                 <p class="admin-dashboard-section__text">Выберите зал для конфигурации:</p>
                 <div class="admin-dashboard-section">
@@ -98,10 +103,10 @@
                 </div>
                 <div class="col-md-4 admin-dashboard-section__hall-rows-of-seats-text">
                     <label class="admin-dashboard-section__hall-text"><br></label>
-                    <label class="admin-dashboard-section__hall-text">за&nbsp;<div
+                    <div class="admin-dashboard-section__hall-text">за&nbsp;<div
                             class="place-color hall-editor__cell standart"></div>
                         <div class="admin-dashboard-section__hall-text">обычные кресла</div>
-                    </label>
+                    </div>
                 </div>
             </div>
             <div class="row admin-dashboard-section__hall-price">
@@ -111,10 +116,10 @@
                 </div>
                 <div class="col-md-4 admin-dashboard-section__hall-rows-of-seats-text">
                     <label class="admin-dashboard-section__hall-text"><br></label>
-                    <label class="admin-dashboard-section__hall-text">за&nbsp;<div
+                    <div class="admin-dashboard-section__hall-text">за&nbsp;<div
                             class="place-color hall-editor__cell vip"></div>
                         <div class="admin-dashboard-section__hall-text">VIP кресла</div>
-                    </label>
+                    </div>
                 </div>
             </div>
             <div>
@@ -127,9 +132,9 @@
             </div>
         </section>
         <section class="admin-section">
-            <h2 class="admin-dashboard-section__title">
+            <div class="admin-dashboard-section__title">
                 <div class="admin-dashboard-section__title-text">СЕТКА СЕАНСОВ</div>
-            </h2>
+            </div>
             <button class="btn btn--primary mb-3" data-bs-toggle="modal" data-bs-target="#addFilmModal">ДОБАВИТЬ
                 ФИЛЬМ</button>
             <div class="films-pool" id="films-pool"></div>
@@ -146,9 +151,9 @@
             </div>
         </section>
         <section class="admin-section">
-            <h2 class="admin-dashboard-section__title">
+            <div class="admin-dashboard-section__title">
                 <div class="admin-dashboard-section__title-text">ОТКРЫТЬ ПРОДАЖИ</div>
-            </h2>
+            </div>
             <div class="row admin-dashboard-section">
                 <p class="admin-dashboard-section__text">Выбирите залл для открытия/закрытия продаж:</p>
                 <div class="row">
@@ -183,7 +188,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">ДОБАВЛЕНИЕ ФИЛЬМА</h5>
+                    <p class="modal-title">ДОБАВЛЕНИЕ ФИЛЬМА</p>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
@@ -221,7 +226,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">ДОБАВЛЕНИЕ СЕАНСА</h5>
+                    <p class="modal-title">ДОБАВЛЕНИЕ СЕАНСА</p>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
