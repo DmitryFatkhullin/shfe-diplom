@@ -249,6 +249,8 @@
 
 .admin-dashboard-section__hall-text-before-hall-scheme {
     overflow-wrap: break-word;
+    text-align: left;
+    margin-left: 104px;
 }
 
 .admin-dashboard-section__text-center {
@@ -336,6 +338,8 @@
     font-weight: 400;
     color: #848484;
     margin-bottom: 11px;
+    text-align: left;
+    margin-left: 104px;
 }
 
 .hall-item__delete {
@@ -393,6 +397,7 @@ input::-webkit-inner-spin-button {
     display: flex;
     padding-left: 0;
     margin-bottom: 11px;
+    margin-left: 106px;
 }
 
 .place-color {
@@ -426,6 +431,10 @@ input::-webkit-inner-spin-button {
     text-align: center;
     padding-top: 26px;
     margin-bottom: 20px;
+}
+
+.admin-dashboard-section-row-tabs {
+    margin-left: 0;
 }
 
 .admin-hall-editor {
@@ -1033,6 +1042,8 @@ input::-webkit-inner-spin-button {
 
     .admin-dashboard-section__hall-text-before-hall-scheme {
         overflow-wrap: break-word;
+        text-align: left;
+        margin-left: 31px;
     }
 
     .admin-dashboard-section__hall-text {
@@ -1046,6 +1057,8 @@ input::-webkit-inner-spin-button {
 
     .admin-dashboard-section__hall-text-desktop {
         font-size: 0;
+        text-align: left;
+        margin-left: 31px;
     }
 
     .admin-dashboard-section__hall-text-desktop::after {
@@ -1148,4 +1161,11 @@ input::-webkit-inner-spin-button {
         text-align: center;
     }
 
+    .admin-dashboard-section__place-color {
+        margin-left: 31px;
+    }
+
+    .admin-hall-editor {
+        margin-left: 5px;
+    }
 }
