@@ -1,0 +1,545 @@
+body {
+    background-image: url('../assets/cinema-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    font-family: 'Roboto', sans-serif;
+}
+
+.page {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.container-hall {
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: #F1EBE6F2;
+    margin-bottom: 260px;
+}
+
+main.container {
+    padding-bottom: 30px;
+    margin-bottom: 200px;
+    padding: 0;
+    padding-bottom: 30px;
+}
+
+.header {
+    color: #fff;
+    padding: 14px 0;
+}
+
+.header__title {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 900;
+    margin: 0;
+    font-size: 34px;
+    line-height: 39px;
+    letter-spacing: 0;
+    text-transform: uppercase;
+    background: none;
+}
+
+.header__title .light {
+    font-weight: 100;
+}
+
+.btn--header {
+    background-color: #16A6AF;
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 500;
+    font-family: 'Roboto', sans-serif;
+    transition: background-color 0.3s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.btn--header:hover {
+    background-color: #12838a;
+    color: #fff;
+}
+
+.dates-wrapper {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 1px;
+    margin: 15px 0;
+}
+
+.dates {
+    flex: 1 1 auto;
+    display: flex;
+    gap: 1px;
+    min-width: 200px;
+    overflow-x: auto;
+}
+
+.dates__item {
+    flex: 1;
+    height: 48px;
+    padding: 0 10px;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    background: #FFFFFFE5;
+    color: #000;
+    cursor: pointer;
+    box-sizing: border-box;
+    white-space: nowrap;
+}
+
+.dates__item--active {
+    flex: 2;
+    background: #FFFFFF;
+    color: black;
+    height: 52px;
+    margin-top: -2px;
+}
+
+.dates__item--weekend {
+    color: red;
+}
+
+.dates-scroll--next {
+    height: 48px;
+    width: 124px;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    background: #FFFFFFE5;
+    cursor: pointer;
+    margin-top: -2px;
+}
+
+ul.dates,
+ol.dates {
+    margin: 0;
+    padding-left: 0;
+}
+
+.film-card {
+    border: 1px solid #eee;
+    border-radius: 2px;
+    padding: 20px;
+    margin-bottom: 20px;
+    background: #FFFFFFE5;
+    margin-top: 30px;
+}
+
+.film-card__poster {
+    border-radius: 0 !important;
+    width: 125px;
+    height: 175px;
+    object-fit: cover;
+}
+
+.film-card__poster-col {
+    flex: 0.3;
+    min-width: 125px;
+    height: 175px;
+    padding-right: 0;
+}
+
+.film-card__poster-text {
+    flex: 2;
+}
+
+.film-card__title {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 18px;
+    margin: 0 0 10px;
+}
+
+.film-card__info {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.film-card__description {
+    font-size: 14px;
+    line-height: 16px;
+    margin-bottom: 10px;
+}
+
+.film-card__seances {
+    display: block;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.film-card__hall {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.film-card__hall-name {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.film-card__times {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.film-card__time {
+    background-color: #FFFFFF;
+    padding: 5px 12px;
+    background: #fff;
+    color: #000;
+    border-radius: 2px;
+    text-decoration: none;
+    font-size: 15px;
+    line-height: 17px;
+    box-shadow: 0 2px 4px #0000001F;
+}
+
+.film-card__time--disabled {
+    opacity: 0.5;
+    pointer-events: none;
+    background: #ccc;
+    border-color: #ccc;
+    color: #666;
+}
+
+.hall-scheme {
+    text-align: center;
+    background-color: #171D24;
+    padding-bottom: 10px;
+    padding-top: 20px;
+}
+
+.hall-scheme-row {
+    display: flex;
+    margin: 0;
+
+}
+
+.hall-scheme-col {
+    flex: 3;
+}
+
+.hall-scheme-col-icon {
+    display: 1;
+    justify-content: right;
+    align-items: center;
+    padding: 0;
+}
+
+.hall-scheme-col-icon {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+}
+
+.hall-scheme-col-icon img {
+    width: 120px;
+    height: 64px;
+    opacity: 0;
+}
+
+#film-title {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 18px;
+    padding-top: 15px;
+    margin-bottom: 7px;
+    margin-left: 15px;
+}
+
+.seance-paragraph {
+    margin-bottom: 8px;
+}
+
+.seance-text {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 16 px;
+    margin-left: 15px;
+}
+
+.seance-hall {
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    line-height: 18px;
+    font-weight: 700;
+    margin-left: 15px;
+}
+
+.hall-scheme__screen {
+    font-family: 'Roboto', sans-serif;
+    font-size: 12px;
+    color: #525252;
+    line-height: 14px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    padding: 8px 24px;
+    display: flex;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    max-width: 250px;
+    padding: 5px;
+    border: 2px solid #525252;
+    padding-left: 100px;
+}
+
+.hall-scheme__row {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 4px;
+}
+
+.hall-scheme__place {
+    width: 20px;
+    height: 20px;
+    margin: 0 2px;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.hall-scheme__place--standart {
+    background: #FFFFFF;
+    color: #fff;
+}
+
+.hall-scheme__place--vip {
+    background: #F9953A;
+    color: #000;
+}
+
+.hall-scheme__place--taken {
+    background: #525252;
+    color: #fff;
+    cursor: not-allowed;
+}
+
+.hall-scheme__place--disabled {
+    background: #6c757d;
+    color: #fff;
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.hall-scheme__place--selected {
+    background: #25C4CE;
+    outline-offset: 2px;
+}
+
+.legend {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px 0;
+    background-color: #171D24;
+}
+
+.legend-row {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+}
+
+.legend-color-text {
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    color: #ffffff;
+
+}
+
+.legend-color {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 3px;
+}
+
+.legend-color--standart {
+    background-color: #FFFFFF;
+}
+
+.legend-color--taken {
+    background-color: #525252;
+}
+
+.legend-color--vip {
+    background-color: #F9953A;
+}
+
+.legend-color--selected {
+    background-color: #25C4CE;
+    outline: 1px solid #525252;
+}
+
+.btn {
+    display: inline-block;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    margin-top: 30px;
+}
+
+.btn--primary {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    background: #16A6AF;
+    color: #fff;
+}
+
+.btn--primary:hover {
+    background-color: #16A6AF;
+    color: #FFFFFF;
+}
+
+.btn--secondary {
+    background: #6c757d;
+    color: #fff;
+}
+
+.btn--primary-book {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    background: #16A6AF;
+    color: #fff;
+    margin-bottom: 30px;
+}
+
+.btn--primary-book:hover {
+    background-color: #16A6AF;
+    color: #FFFFFF;
+}
+
+.payment-container {
+    background-color: #F1EBE6F2;
+}
+
+.payment-title {
+    font-family: 'Roboto', sans-serif;
+    color: #C76F00;
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 25px;
+    padding-left: 15px;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    border: 3px dashed #C76F00;
+    margin-bottom: 23px;
+}
+
+.text-booking-info {
+    padding-left: 15px;
+    padding-bottom: 10px;
+    margin-bottom: 0px;
+}
+
+.ticket-container {
+    background-color: #F1EBE6F2;
+}
+
+.ticket {
+    background-color: transparent;
+}
+
+.ticket__title {
+    font-family: 'Roboto', sans-serif;
+    color: #C76F00;
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 25px;
+    padding-left: 15px;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    border: 3px dashed #C76F00;
+    margin-bottom: 23px;
+}
+
+.text-ticket-info {
+    padding-left: 15px;
+    padding-bottom: 10px;
+    margin-bottom: 0px;
+}
+
+.ticket__qrcode {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.ticket__qrcode img {
+    max-width: 100%;
+    height: auto;
+}
+
+@media (max-width: 768px) {
+    .dates__item {
+        width: 100px;
+        height: 44px;
+        font-size: 12px;
+    }
+
+    .dates-scroll--next {
+        margin-top: -2px;
+        height: 44px;
+    }
+
+    .dates__item--active {
+        height: 48px;
+    }
+
+    .hall-scheme-col-icon img {
+        width: 120px;
+        height: 64px;
+        opacity: 1;
+        visibility: visible;
+    }
+}
+
+@media (max-width: 390px) {
+    .hall-scheme-col {
+        flex: 3;
+    }
+
+    .hall-scheme-col-icon {
+        flex: 1;
+    }
+}
