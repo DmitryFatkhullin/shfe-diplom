@@ -2,7 +2,7 @@ body {
     background-image: url('../assets/cinema-bg.jpg');
     background-size: cover;
     background-position: center;
-    background-attachment: fixed;
+    background-attachment: scroll;
     font-family: 'Roboto', sans-serif;
 }
 
@@ -13,42 +13,47 @@ body {
 }
 
 .container {
-    max-width: 1200px;
+    max-width: 990px;
     margin: 0 auto;
+    padding-left: 14px;
 }
 
 .container-hall {
-    max-width: 1200px;
+    max-width: 990px;
     margin: 0 auto;
     background-color: #F1EBE6F2;
     margin-bottom: 260px;
 }
 
+.container-hall-background {
+    background-color: #171D24;
+}
+
 main.container {
-    padding-bottom: 30px;
-    margin-bottom: 200px;
     padding: 0;
-    padding-bottom: 30px;
 }
 
 .header {
     color: #fff;
-    padding: 14px 0;
+    margin: 14px 0;
 }
 
-.header__title {
-    font-family: 'Roboto', sans-serif;
-    font-weight: 900;
-    margin: 0;
-    font-size: 34px;
-    line-height: 39px;
-    letter-spacing: 0;
-    text-transform: uppercase;
-    background: none;
+.header__logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.header__title .light {
-    font-weight: 100;
+.header__logo-link {
+    display: inline-block;
+    text-decoration: none;
+}
+
+.logo-img {
+    height: 40px;
+    width: auto;
+    max-width: 200px;
+    object-fit: contain;
 }
 
 .btn--header {
@@ -71,9 +76,11 @@ main.container {
 .dates-wrapper {
     display: flex;
     flex-wrap: nowrap;
-    align-items: center;
     gap: 1px;
     margin: 15px 0;
+    justify-content: center;
+    align-items: center;
+    margin-top: 0;
 }
 
 .dates {
@@ -82,6 +89,7 @@ main.container {
     gap: 1px;
     min-width: 200px;
     overflow-x: auto;
+    align-items: center;
 }
 
 .dates__item {
@@ -92,14 +100,18 @@ main.container {
     border-radius: 2px;
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
-    font-size: 14px;
+    font-size: 12px;
+    line-height: 14px;
+    font-weight: 400;
     background: #FFFFFFE5;
     color: #000;
     cursor: pointer;
     box-sizing: border-box;
     white-space: nowrap;
+    transition: all 0.2s ease;
+    text-align: left;
+    padding-left: 20px;
 }
 
 .dates__item--active {
@@ -107,21 +119,44 @@ main.container {
     background: #FFFFFF;
     color: black;
     height: 52px;
-    margin-top: -2px;
+    font-size: 15px;
+    line-height: 14px;
+    font-weight: 700;
 }
 
 .dates__item--weekend {
-    color: red;
+    color: red !important;
 }
 
-.dates-scroll--next {
+.dates__item--prev-button {
+    font-family: Consolas, "Courier New", monospace;
     height: 48px;
     width: 124px;
+    font-size: 18px;
+    line-height: 28px;
+    font-weight: 700;
     border: 1px solid #ccc;
     border-radius: 2px;
     background: #FFFFFFE5;
     cursor: pointer;
-    margin-top: -2px;
+    text-align: center;
+}
+
+.dates__item--prev-button:hover {
+    background: #FFFFFFE5;
+}
+
+.dates-scroll--next {
+    font-family: Consolas, "Courier New", monospace;
+    height: 48px;
+    width: 124px;
+    font-size: 18px;
+    line-height: 28px;
+    font-weight: 700;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    background: #FFFFFFE5;
+    cursor: pointer;
 }
 
 ul.dates,
@@ -137,6 +172,11 @@ ol.dates {
     margin-bottom: 20px;
     background: #FFFFFFE5;
     margin-top: 30px;
+    padding-bottom: 0;
+}
+
+.film-card:last-of-type {
+    margin-bottom: 0;
 }
 
 .film-card__poster {
@@ -214,18 +254,27 @@ ol.dates {
 
 .film-card__time--disabled {
     opacity: 0.5;
-    pointer-events: none;
     background: #ccc;
     border-color: #ccc;
     color: #666;
+    cursor: not-allowed;
 }
 
 .hall-scheme {
     text-align: center;
     background-color: #171D24;
-    padding-bottom: 10px;
-    padding-top: 20px;
+    padding-bottom: 30px;
+    padding-top: 15px;
 }
+
+.screen-image {
+    max-width: 100%;
+    width: 800px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
 
 .hall-scheme-row {
     display: flex;
@@ -238,18 +287,12 @@ ol.dates {
 }
 
 .hall-scheme-col-icon {
-    display: 1;
-    justify-content: right;
-    align-items: center;
-    padding: 0;
-}
-
-.hall-scheme-col-icon {
     position: relative;
     z-index: 10;
     display: flex;
     justify-content: right;
     align-items: center;
+    padding: 0;
 }
 
 .hall-scheme-col-icon img {
@@ -264,12 +307,12 @@ ol.dates {
     font-size: 16px;
     line-height: 18px;
     padding-top: 15px;
-    margin-bottom: 7px;
+    margin-bottom: 5px;
     margin-left: 15px;
 }
 
 .seance-paragraph {
-    margin-bottom: 8px;
+    margin-bottom: 6px;
 }
 
 .seance-text {
@@ -278,6 +321,20 @@ ol.dates {
     font-size: 14px;
     line-height: 16 px;
     margin-left: 15px;
+}
+
+.hall-scheme-icon-text {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 16px;
+    text-align: center;
+    margin-left: 15px;
+    width: 67px;
+    height: 64px;
+    margin-left: 10px;
+    margin-right: 31px;
+    opacity: 0;
 }
 
 .seance-hall {
@@ -291,19 +348,15 @@ ol.dates {
 .hall-scheme__screen {
     font-family: 'Roboto', sans-serif;
     font-size: 12px;
-    color: #525252;
     line-height: 14px;
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: 30px;
+    margin-bottom: 15px;
     text-transform: uppercase;
-    padding: 8px 24px;
     display: flex;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    max-width: 250px;
-    padding: 5px;
-    border: 2px solid #525252;
-    padding-left: 100px;
+    max-width: 240px;
+    padding: 0;
+    text-align: center;
 }
 
 .hall-scheme__row {
@@ -335,7 +388,7 @@ ol.dates {
 }
 
 .hall-scheme__place--taken {
-    background: #525252;
+    border: 1px solid #525252;
     color: #fff;
     cursor: not-allowed;
 }
@@ -354,17 +407,16 @@ ol.dates {
 
 .legend {
     display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding: 20px 0;
+    justify-content: center;
+    gap: 14px;
+    padding: 0;
     background-color: #171D24;
 }
 
-.legend-row {
+.legend-column {
     display: flex;
-    justify-content: center;
-    gap: 30px;
-    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .legend-item {
@@ -372,14 +424,15 @@ ol.dates {
     align-items: center;
     gap: 8px;
     font-size: 14px;
+    margin-bottom: 10px;
 }
 
 .legend-color-text {
     font-family: 'Roboto', sans-serif;
     font-size: 14px;
+    line-height: 16px;
     font-weight: 300;
     color: #ffffff;
-
 }
 
 .legend-color {
@@ -394,7 +447,7 @@ ol.dates {
 }
 
 .legend-color--taken {
-    background-color: #525252;
+    border: 1px solid #525252;
 }
 
 .legend-color--vip {
@@ -423,6 +476,7 @@ ol.dates {
     line-height: 16px;
     background: #16A6AF;
     color: #fff;
+    width: 337px;
 }
 
 .btn--primary:hover {
@@ -443,6 +497,8 @@ ol.dates {
     background: #16A6AF;
     color: #fff;
     margin-bottom: 30px;
+    width: 232px;
+    height: 40px;
 }
 
 .btn--primary-book:hover {
@@ -450,8 +506,42 @@ ol.dates {
     color: #FFFFFF;
 }
 
-.payment-container {
+.payment-container,
+.ticket-container {
+    position: relative;
     background-color: #F1EBE6F2;
+    padding: 20px 0;
+    margin: 20px 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.payment-container::before,
+.ticket-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 16px;
+    background-image: radial-gradient(circle at 50% 0, #C76F00 3px, transparent 3px);
+    background-size: 12px 16px;
+    background-repeat: repeat-x;
+    background-position: top;
+}
+
+.payment-container::after,
+.ticket-container::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 16px;
+    background-image: radial-gradient(circle at 50% 100%, #C76F00 3px, transparent 3px);
+    background-size: 12px 16px;
+    background-repeat: repeat-x;
+    background-position: bottom;
 }
 
 .payment-title {
@@ -463,8 +553,20 @@ ol.dates {
     padding-left: 15px;
     padding-top: 25px;
     padding-bottom: 25px;
-    border: 3px dashed #C76F00;
     margin-bottom: 23px;
+}
+
+.payment-title::after {
+    content: '';
+    position: absolute;
+    bottom: 355px;
+    left: 0;
+    width: 100%;
+    height: 16px;
+    background-image: radial-gradient(circle at 6px 8px, #C76F00 3px, transparent 3px);
+    background-size: 12px 16px;
+    background-repeat: repeat-x;
+    background-position: bottom;
 }
 
 .text-booking-info {
@@ -473,8 +575,35 @@ ol.dates {
     margin-bottom: 0px;
 }
 
+.text-booking-info-bottom-first-str {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 16px;
+    padding-left: 15px;
+    padding-bottom: 0;
+    margin-bottom: 0px;
+    margin-top: 30px !important;
+    color: #000000 !important;
+}
+
+.text-booking-info-bottom-second-str {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 16px;
+    padding-left: 15px;
+    padding-bottom: 30px;
+    margin-bottom: 0px;
+    margin-top: 10px !important;
+    color: #000000 !important;
+}
+
 .ticket-container {
+    position: relative;
     background-color: #F1EBE6F2;
+    padding: 20px 0;
+    margin: 20px 0;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .ticket {
@@ -490,8 +619,20 @@ ol.dates {
     padding-left: 15px;
     padding-top: 25px;
     padding-bottom: 25px;
-    border: 3px dashed #C76F00;
     margin-bottom: 23px;
+}
+
+.ticket__title::after {
+    content: '';
+    position: absolute;
+    bottom: 478px;
+    left: 0;
+    width: 100%;
+    height: 16px;
+    background-image: radial-gradient(circle at 6px 8px, #C76F00 3px, transparent 3px);
+    background-size: 12px 16px;
+    background-repeat: repeat-x;
+    background-position: bottom;
 }
 
 .text-ticket-info {
@@ -518,7 +659,6 @@ ol.dates {
     }
 
     .dates-scroll--next {
-        margin-top: -2px;
         height: 44px;
     }
 
@@ -527,10 +667,28 @@ ol.dates {
     }
 
     .hall-scheme-col-icon img {
-        width: 120px;
-        height: 64px;
+        width: 24px;
+        height: 32px;
         opacity: 1;
         visibility: visible;
+    }
+
+    .hall-scheme-icon-text {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .payment-title::after {
+        content: '';
+        position: absolute;
+        bottom: 370px;
+        left: 0;
+        width: 100%;
+        height: 16px;
+        background-image: radial-gradient(circle at 6px 8px, #C76F00 3px, transparent 3px);
+        background-size: 12px 16px;
+        background-repeat: repeat-x;
+        background-position: bottom;
     }
 }
 
@@ -541,5 +699,41 @@ ol.dates {
 
     .hall-scheme-col-icon {
         flex: 1;
+    }
+
+    .dates__item {
+        width: 20px;
+        font-size: 12px;
+        line-height: 14px;
+    }
+
+    .dates-scroll--next {
+        width: 44px;
+    }
+
+    .payment-title::after {
+        content: '';
+        position: absolute;
+        bottom: 390px;
+        left: 0;
+        width: 100%;
+        height: 16px;
+        background-image: radial-gradient(circle at 6px 8px, #C76F00 3px, transparent 3px);
+        background-size: 12px 16px;
+        background-repeat: repeat-x;
+        background-position: bottom;
+    }
+
+    .ticket__title::after {
+        content: '';
+        position: absolute;
+        bottom: 495px;
+        left: 0;
+        width: 100%;
+        height: 16px;
+        background-image: radial-gradient(circle at 6px 8px, #C76F00 3px, transparent 3px);
+        background-size: 12px 16px;
+        background-repeat: repeat-x;
+        background-position: bottom;
     }
 }

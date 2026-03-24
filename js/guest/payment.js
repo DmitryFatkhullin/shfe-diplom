@@ -31,11 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (purchasedTickets && purchasedTickets.length > 0) {
                 saveToSession('purchasedTickets', purchasedTickets);
                 window.location.href = 'ticket.html';
-            } else {
-                alert('Ошибка при бронировании: не удалось получить билеты');
             }
-        } else {
-            alert('Ошибка при бронировании: ' + (response.error || 'Неизвестная ошибка'));
         }
     });
 });

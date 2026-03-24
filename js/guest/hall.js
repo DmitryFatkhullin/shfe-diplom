@@ -13,7 +13,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     const seanceId = params.get('seanceId');
     const date = params.get('date');
     if (!seanceId || !date) {
-        alert('Ошибка: не указан сеанс или дата');
         return;
     }
     const allData = await api.getAllData();
@@ -34,11 +33,23 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     function renderScheme() {
         const container = document.getElementById('hall-scheme');
-        container.innerHTML = '<div class="hall-scheme__screen">ЭКРАН</div>';
+        container.innerHTML = '<div class="hall-scheme__screen"> <img src="assets/screen.png" alt="Экран" class="screen-image"></div>';
         config.forEach((row, rowIndex) => {
             const rowDiv = document.createElement('div');
             rowDiv.className = 'hall-scheme__row';
             row.forEach((placeType, placeIndex) => {
+                if (placeType === 'disabled') {
+                    const emptyDiv = document.createElement('div');
+                    emptyDiv.className = 'hall-scheme__place hall-scheme__place--empty';
+                    emptyDiv.style.width = '20px';
+                    emptyDiv.style.height = '20px';
+                    emptyDiv.style.margin = '0 2px';
+                    emptyDiv.style.visibility = 'hidden';
+                    emptyDiv.style.pointerEvents = 'none';
+                    rowDiv.appendChild(emptyDiv);
+                    return;
+                }
+
                 const placeDiv = document.createElement('div');
                 placeDiv.className = `hall-scheme__place hall-scheme__place--${placeType}`;
                 placeDiv.dataset.row = rowIndex + 1;
@@ -59,9 +70,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                         updateTotal();
                     });
                 }
-                rowDiv.appendChild(placeDiv);
+                rowDiv.append(placeDiv);
             });
-            container.appendChild(rowDiv);
+            container.append(rowDiv);
         });
     }
     function updateTotal() {

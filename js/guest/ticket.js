@@ -23,7 +23,6 @@ document.addEventListener('DOMContentLoaded', () => {
             placesList += ', ';
         }
     });
-
     container.innerHTML = `
         <h2 class="ticket__title">ЭЛЕКТРОННЫЙ БИЛЕТ</h2>
         <div class="ticket__info">
@@ -33,25 +32,12 @@ document.addEventListener('DOMContentLoaded', () => {
             <p class="text-ticket-info">Начало сеанса: <strong>${time}</strong></p>
         </div>
         <div class="ticket__qrcode" id="qrcode"></div>
-        <p class="mt-4 text-muted text-booking-info">Покажите QR-код нашему контроллеру для подтверждения бронирования.<br>Приятного просмотра!</p>
+        <p class="mt-4 text-muted text-booking-info-bottom-first-str">Покажите QR-код нашему контроллеру для подтверждения бронирования.<p class="mt-4 text-muted text-booking-info-bottom-second-str">Приятного просмотра!</p></p>
     `;
-
     try {
-        if (typeof qrcode === 'undefined') {
-            throw new Error('Библиотека qrcode-generator не загружена');
+        if (typeof QRCode === 'undefined') {
+            throw new Error('Библиотека QRCode не загружена');
         }
-        function generateBookingCode() {
-            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-            let code = '';
-            for (let i = 0; i < 3; i++) {
-                for (let j = 0; j < 3; j++) {
-                    code += chars.charAt(Math.floor(Math.random() * chars.length));
-                }
-                if (i < 2) code += '-';
-            }
-            return code;
-        }
-        const bookingCode = generateBookingCode();
         let seatsList = '';
         allTickets.forEach((ticket, index) => {
             const row = ticket.ticket_row || ticket.row || '?';
@@ -62,29 +48,31 @@ document.addEventListener('DOMContentLoaded', () => {
                 seatsList += '; ';
             }
         });
+
         const totalPriceQR = allTickets.reduce((sum, t) =>
             sum + (parseInt(t.ticket_price || t.price || 0)), 0
         );
-
-        function toBase64(str) {
-            return btoa(unescape(encodeURIComponent(str)));
-        }
-
-        function fromBase64(str) {
-            return decodeURIComponent(escape(atob(str)));
-        }
-        const originalText = `Дата: ${date}
+        const qrText = `Дата: ${date}
 Время: ${time}
 Фильм: ${filmName}
 Зал: ${hallName}
 Места: ${seatsList}
 Всего: ${totalPriceQR} руб.
 Билет действителен строго на свой сеанс`;
-        const encodedText = toBase64(originalText);
-        const qr = qrcode(0, 'M');
-        qr.addData(encodedText);
-        qr.make();
-        document.getElementById('qrcode').innerHTML = qr.createImgTag(5);
+        const qrContainer = document.getElementById('qrcode');
+        qrContainer.innerHTML = '';
+        const canvas = document.createElement('canvas');
+        canvas.id = 'qr-canvas';
+        canvas.width = 200;
+        canvas.height = 200;
+        qrContainer.appendChild(canvas);
+        QRCode.toCanvas(canvas, qrText, { width: 200 }, function (error) {
+            if (error) {
+                console.error('Ошибка создания QR-кода:', error);
+                qrContainer.innerHTML = '<p style="color:red;">Не удалось создать QR-код</p>';
+            }
+        });
+
     } catch (e) {
         console.error('Ошибка генерации QR-кода:', e);
         document.getElementById('qrcode').innerHTML = '<p style="color:red;">Не удалось создать QR-код</p>';

@@ -28,10 +28,10 @@ function renderFilmsPool() {
         const duration = document.createElement('div');
         duration.className = 'film-pool-duration';
         duration.textContent = `${film.film_duration} минут`;
-        info.appendChild(title);
-        info.appendChild(duration);
-        filmEl.appendChild(poster);
-        filmEl.appendChild(info);
+        info.append(title);
+        info.append(duration);
+        filmEl.append(poster);
+        filmEl.append(info);
         const deleteIcon = document.createElement('span');
         deleteIcon.className = 'film-pool-delete';
         deleteIcon.dataset.filmId = film.id;
@@ -41,14 +41,13 @@ function renderFilmsPool() {
             e.preventDefault();
             deleteFilm(film.id);
         });
-        filmEl.appendChild(deleteIcon);
+        filmEl.append(deleteIcon);
         filmEl.addEventListener('dragstart', (e) => {
             e.dataTransfer.setData('filmId', film.id);
         });
-        pool.appendChild(filmEl);
+        pool.append(filmEl);
     });
 }
-
 
 async function deleteFilm(filmId) {
     const currentColors = {};
@@ -70,8 +69,6 @@ async function deleteFilm(filmId) {
         });
         renderFilmsPool();
         buildTimeline();
-    } else {
-        alert('Ошибка при удалении фильма');
     }
 }
 
@@ -82,6 +79,16 @@ function attachFilmEvents() {
         fileInput.click();
     });
     document.getElementById('add-film-submit').addEventListener('click', async () => {
+        const nameInput = document.querySelector('#add-film-form [name="filmName"]');
+        const durationInput = document.querySelector('#add-film-form [name="filmDuration"]');
+        const descriptionInput = document.querySelector('#add-film-form [name="filmDescription"]');
+        const originInput = document.querySelector('#add-film-form [name="filmOrigin"]');
+        const nameValid = validateNotEmpty(nameInput, 'Название фильма');
+        const durationValid = validatePositiveInteger(durationInput, 'Продолжительность', 1);
+        const descriptionValid = validateNotEmpty(descriptionInput, 'Описание фильма');
+        const originValid = validateNotEmpty(originInput, 'Страна');
+
+        if (!nameValid || !durationValid || !descriptionValid || !originValid) return;
         const form = document.getElementById('add-film-form');
         const formData = new FormData(form);
         if (fileInput.files.length > 0) {
@@ -105,8 +112,6 @@ function attachFilmEvents() {
             }
             form.reset();
             fileInput.value = '';
-        } else {
-            alert('Ошибка при добавлении фильма: ' + (result.error || 'Неизвестная ошибка'));
         }
     });
 }

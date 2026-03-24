@@ -9,17 +9,20 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body class="page">
     <header class="header">
         <div class="container d-flex justify-content-between align-items-center">
-            <h1 class="header__title">ИДЁМ<span class="light">В</span>КИНО</h1>
+            <a href="index.html" class="header__logo-link">
+                <img src="assets/logo.png" alt="Идём в кино" class="logo-img">
+            </a>
             <a href="admin/login.html" class="btn--header">Войти</a>
         </div>
     </header>
     <main class="container">
         <div class="dates-wrapper">
             <div class="dates" id="dates-container"></div>
-            <button class="dates-scroll--next" aria-label="Следующие даты">›</button>
+            <button class="dates-scroll--next" id="dates-scroll-next" aria-label="Следующие даты">&gt;</button>
         </div>
         <div class="films" id="films-container"></div>
     </main>
@@ -29,4 +32,5 @@
     <script src="js/utils.js"></script>
     <script src="js/guest/index.js"></script>
 </body>
+
 </html>

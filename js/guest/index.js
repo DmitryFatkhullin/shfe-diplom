@@ -2,14 +2,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     const datesContainer = document.getElementById('dates-container');
     const filmsContainer = document.getElementById('films-container');
     const nextBtn = document.querySelector('.dates-scroll--next');
-
-
+    const prevBtn = document.getElementById('dates-scroll-prev');
     let allDays = getInitialDays(6);
     let startIndex = 0;
     let currentDate = allDays[0].date;
-
-
-
+    let showPrevButton = false;
     if (nextBtn) {
         nextBtn.addEventListener('click', () => {
             const lastVisibleIndex = startIndex + 6 - 1;
@@ -23,23 +20,46 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (startIndex + 6 <= allDays.length - 1) {
                 startIndex++;
                 currentDate = allDays[startIndex].date;
+                showPrevButton = true;
                 renderDates();
                 loadFilms();
             }
         });
     }
 
+    function scrollPrev() {
+        if (startIndex > 0) {
+            startIndex--;
+            currentDate = allDays[startIndex].date;
+            if (startIndex === 0) {
+                showPrevButton = false;
+            }
+            renderDates();
+            loadFilms();
+        }
+    }
+
     function renderDates() {
         datesContainer.innerHTML = '';
         const visibleDays = allDays.slice(startIndex, startIndex + 6);
-        visibleDays.forEach((day) => {
+
+        visibleDays.forEach((day, index) => {
+            if (index === 0 && showPrevButton) {
+                const backButton = document.createElement('div');
+                backButton.className = 'dates__item dates__item--prev-button';
+                backButton.innerHTML = '&lt;';
+                backButton.addEventListener('click', scrollPrev);
+                datesContainer.appendChild(backButton);
+                return;
+            }
             const dateEl = document.createElement('div');
             const isWeekend = day.dayOfWeek === 'Сб' || day.dayOfWeek === 'Вс';
             let itemClass = 'dates__item';
+            if (isWeekend) {
+                itemClass += ' dates__item--weekend';
+            }
             if (day.date === currentDate) {
                 itemClass += ' dates__item--active';
-            } else if (isWeekend) {
-                itemClass += ' dates__item--weekend';
             }
             dateEl.className = itemClass;
             dateEl.dataset.date = day.date;
@@ -51,6 +71,14 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
             datesContainer.appendChild(dateEl);
         });
+        const remainingSlots = 6 - datesContainer.children.length;
+        for (let i = 0; i < remainingSlots; i++) {
+            const emptySlot = document.createElement('div');
+            emptySlot.className = 'dates__item';
+            emptySlot.style.visibility = 'hidden';
+            emptySlot.style.pointerEvents = 'none';
+            datesContainer.appendChild(emptySlot);
+        }
     }
 
     async function loadFilms() {
@@ -109,26 +137,26 @@ document.addEventListener('DOMContentLoaded', async () => {
             posterImg.className = 'film-card__poster img-fluid rounded';
             posterImg.src = film.film_poster || 'assets/placeholder.png';
             posterImg.alt = film.film_name;
-            posterCol.appendChild(posterImg);
+            posterCol.append(posterImg);
             const infoCol = document.createElement('div');
             infoCol.className = 'col-md-9 col-12 film-card__poster-text';
             const title = document.createElement('h2');
             title.className = 'film-card__title';
             title.textContent = film.film_name;
-            infoCol.appendChild(title);
+            infoCol.append(title);
             if (film.film_description) {
                 const desc = document.createElement('div');
                 desc.className = 'film-card__description';
                 desc.textContent = film.film_description;
-                infoCol.appendChild(desc);
+                infoCol.append(desc);
             }
             const info = document.createElement('div');
             info.className = 'film-card__info';
             info.textContent = `${film.film_duration} минут, ${film.film_origin}`;
-            infoCol.appendChild(info);
-            row.appendChild(posterCol);
-            row.appendChild(infoCol);
-            filmCard.appendChild(row);
+            infoCol.append(info);
+            row.append(posterCol);
+            row.append(infoCol);
+            filmCard.append(row);
             const seancesDiv = document.createElement('div');
             seancesDiv.className = 'film-card__seances';
             Object.entries(film.halls).forEach(([hallId, hall]) => {
@@ -160,13 +188,13 @@ document.addEventListener('DOMContentLoaded', async () => {
                             timeLink.removeAttribute('href');
                         }
                     }
-                    timesDiv.appendChild(timeLink);
+                    timesDiv.append(timeLink);
                 });
-                hallDiv.appendChild(timesDiv);
-                seancesDiv.appendChild(hallDiv);
+                hallDiv.append(timesDiv);
+                seancesDiv.append(hallDiv);
             });
-            filmCard.appendChild(seancesDiv);
-            filmsContainer.appendChild(filmCard);
+            filmCard.append(seancesDiv);
+            filmsContainer.append(filmCard);
         });
     }
 

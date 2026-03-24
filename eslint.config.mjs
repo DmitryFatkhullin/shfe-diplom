@@ -44,7 +44,13 @@ export default defineConfig([
         attachDeleteListener: "readonly",
         initSeanceModal: "readonly",
         openAddSeanceModal: "readonly",
-        updateFilmSelect: "readonly"
+        updateFilmSelect: "readonly",
+        validateNotEmpty: "readonly",
+    validatePositiveInteger: "readonly",
+    validateNonNegative: "readonly",
+    validateSeanceTime: "readonly",
+    clearError: "readonly",
+    showError: "readonly"
       } 
     },
     rules: {

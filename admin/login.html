@@ -9,16 +9,18 @@
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/admin.css">
 </head>
-<body class="page admin-page">
+
+<body class="page admin-page admin-page-login">
     <header class="admin-header">
-        <div class="container align-items-center">
-            <h1 class="admin-header__title">ИДЁМ<span class="admin-title__light">В</span>КИНО</h1>
-            <p class="admin-header__subtitle">Администраторррская</p>
+        <div class="container align-items-center container-admin-header">
+            <a href="../index.html" class="header__logo-link">
+                <img src="../assets/logo-admin.png" alt="Идём в кино Администраторррская" class="logo-img-admin">
+            </a>
         </div>
     </header>
     <main class="container">
         <div class="row justify-content-center">
-            <div class="col-md-7">
+            <div class="col-md-6 admin-login">
                 <div class="admin-section-login">
                     <h2 class="admin-login-section__title">АВТОРИЗАЦИЯ</h2>
                     <form class="login-form" id="login-form">
@@ -40,4 +42,5 @@
     <script src="../js/api.js"></script>
     <script src="../js/admin/auth.js"></script>
 </body>
+
 </html>

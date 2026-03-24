@@ -20,12 +20,10 @@ function initSeanceModal() {
             const option = document.createElement('option');
             option.value = hall.id;
             option.textContent = hall.hall_name;
-            hallSelect.appendChild(option);
+            hallSelect.append(option);
         });
     }
-
     updateFilmSelect();
-
     const filmSelect = document.getElementById('seance-film-select');
     if (filmSelect) {
         filmSelect.innerHTML = '<option value="">Выберите фильм</option>';
@@ -33,20 +31,48 @@ function initSeanceModal() {
             const option = document.createElement('option');
             option.value = film.id;
             option.textContent = film.film_name;
-            filmSelect.appendChild(option);
+            filmSelect.append(option);
         });
     }
-
+    document.getElementById('addSeanceModal').addEventListener('hidden.bs.modal', () => {
+        document.getElementById('seance-hall-select').value = '';
+        document.getElementById('seance-film-select').value = '';
+        document.getElementById('seance-time').value = '00:00';
+        tempSeanceData = null;
+        const errorDiv = document.getElementById('seance-error-message');
+        if (errorDiv) {
+            errorDiv.style.display = 'none';
+            errorDiv.textContent = '';
+        }
+        const timeInput = document.getElementById('seance-time');
+        if (timeInput) {
+            timeInput.classList.remove('error');
+        }
+    });
     document.getElementById('add-seance-submit').addEventListener('click', () => {
         const hallId = document.getElementById('seance-hall-select').value;
         const filmId = document.getElementById('seance-film-select').value;
         const time = document.getElementById('seance-time').value;
+        const errorDiv = document.getElementById('seance-error-message');
+        errorDiv.style.display = 'none';
+        errorDiv.textContent = '';
+        clearError(document.getElementById('seance-time'));
         if (!hallId || !filmId || !time) {
-            alert('Заполните все поля');
+            errorDiv.textContent = 'Заполните все поля';
+            errorDiv.style.display = 'block';
+            return;
+        }
+        const validation = validateSeanceTime(hallId, time, filmId);
+        if (!validation.valid) {
+            errorDiv.textContent = validation.message;
+            errorDiv.style.display = 'block';
+            document.getElementById('seance-time').classList.add('error');
             return;
         }
         if (!isTimeSlotFreeWithPending(hallId, time, filmId)) {
-            alert('Это время уже занято');
+            errorDiv.textContent = 'Это время уже занято (включая несохранённые изменения)';
+            errorDiv.style.display = 'block';
+            document.getElementById('seance-time').classList.add('error');
             return;
         }
         pendingSeances.added.push({
@@ -58,19 +84,10 @@ function initSeanceModal() {
         document.getElementById('seance-hall-select').value = '';
         document.getElementById('seance-film-select').value = '';
         document.getElementById('seance-time').value = '00:00';
+        errorDiv.style.display = 'none';
         buildTimeline();
     });
-    document.getElementById('addSeanceModal').addEventListener('show.bs.modal', function () {
-        updateFilmSelect();
-    });
-    document.getElementById('addSeanceModal').addEventListener('hidden.bs.modal', () => {
-        document.getElementById('seance-hall-select').value = '';
-        document.getElementById('seance-film-select').value = '';
-        document.getElementById('seance-time').value = '00:00';
-        tempSeanceData = null;
-    });
 }
-
 
 function openAddSeanceModal(hallId = null, filmId = null, time = null) {
     const modal = new bootstrap.Modal(document.getElementById('addSeanceModal'));
@@ -99,7 +116,7 @@ function buildTimeline() {
         const hallHeader = document.createElement('div');
         hallHeader.className = 'timeline-hall-header';
         hallHeader.textContent = hall.hall_name;
-        hallTimeline.appendChild(hallHeader);
+        hallTimeline.append(hallHeader);
         const timelineRow = document.createElement('div');
         timelineRow.className = 'timeline-row-with-delete';
         const deleteZone = document.createElement('div');
@@ -107,11 +124,11 @@ function buildTimeline() {
         deleteZone.dataset.hallId = hall.id;
         const deleteIcon = document.createElement('div');
         deleteIcon.className = 'delete-zone__icon';
-        deleteZone.appendChild(deleteIcon);
+        deleteZone.append(deleteIcon);
         const deleteText = document.createElement('span');
         deleteText.className = 'delete-zone__text';
-        deleteZone.appendChild(deleteText);
-        timelineRow.appendChild(deleteZone);
+        deleteZone.append(deleteText);
+        timelineRow.append(deleteZone);
         const timelineContent = document.createElement('div');
         timelineContent.className = 'timeline-content';
         const seancesRow = document.createElement('div');
@@ -137,7 +154,7 @@ function buildTimeline() {
             seanceEl.style.width = widthPercent + '%';
             const textSpan = document.createElement('span');
             textSpan.textContent = film.film_name;
-            seanceEl.appendChild(textSpan);
+            seanceEl.append(textSpan);
             seanceEl.style.backgroundColor = film.color;
             seanceEl.style.color = '#fff';
             seanceEl.draggable = true;
@@ -165,9 +182,8 @@ function buildTimeline() {
                     zone.classList.remove('drag-over');
                 });
             });
-            seancesContainer.appendChild(seanceEl);
+            seancesContainer.append(seanceEl);
         });
-
         pendingSeances.added.forEach((item, index) => {
             if (item.hallId == hall.id) {
                 const film = films.find(f => f.id == item.filmId);
@@ -183,7 +199,7 @@ function buildTimeline() {
                 tempSeance.style.width = widthPercent + '%';
                 const textSpan = document.createElement('span');
                 textSpan.textContent = film.film_name + ' (новый)';
-                tempSeance.appendChild(textSpan);
+                tempSeance.append(textSpan);
                 tempSeance.style.backgroundColor = film.color;
                 tempSeance.style.color = '#fff';
                 tempSeance.draggable = true;
@@ -211,11 +227,11 @@ function buildTimeline() {
                         zone.classList.remove('drag-over');
                     });
                 });
-                seancesContainer.appendChild(tempSeance);
+                seancesContainer.append(tempSeance);
             }
         });
-        seancesRow.appendChild(seancesContainer);
-        timelineContent.appendChild(seancesRow);
+        seancesRow.append(seancesContainer);
+        timelineContent.append(seancesRow);
         const timeRow = document.createElement('div');
         timeRow.className = 'timeline-time-row';
         const timeLabelsContainer = document.createElement('div');
@@ -233,15 +249,14 @@ function buildTimeline() {
             const minutesFromStart = hours * 60 + minutes;
             const leftPercent = (minutesFromStart / TOTAL_MINUTES) * 100;
             label.style.left = leftPercent + '%';
-            timeLabelsContainer.appendChild(label);
+            timeLabelsContainer.append(label);
         });
-        timeRow.appendChild(timeLabelsContainer);
-        timelineContent.appendChild(timeRow);
-        timelineRow.appendChild(timelineContent);
-        hallTimeline.appendChild(timelineRow);
-        timelineDiv.appendChild(hallTimeline);
+        timeRow.append(timeLabelsContainer);
+        timelineContent.append(timeRow);
+        timelineRow.append(timelineContent);
+        hallTimeline.append(timelineRow);
+        timelineDiv.append(hallTimeline);
     });
-
     document.querySelectorAll('.timeline-seances-container').forEach(container => {
         if (container._dragHandlerInstalled) {
             container.removeEventListener('dragover', container._dragoverHandler);
@@ -272,10 +287,6 @@ function buildTimeline() {
         container.addEventListener('drop', container._dropHandler);
         container._dragHandlerInstalled = true;
     });
-
-
-
-
     document.querySelectorAll('.delete-zone').forEach(zone => {
         if (zone._dragHandlerInstalled) {
             zone.removeEventListener('dragover', zone._dragoverHandler);
@@ -322,7 +333,6 @@ function buildTimeline() {
     });
 }
 
-
 function isTimeSlotFreeWithPending(hallId, startTime, filmId) {
     if (!isTimeSlotFree(hallId, startTime, filmId)) {
         return false;
@@ -343,7 +353,6 @@ function isTimeSlotFreeWithPending(hallId, startTime, filmId) {
     }
     return true;
 }
-
 
 function attachSaveCancelListeners() {
     document.getElementById('seance-save').addEventListener('click', async () => {
@@ -367,11 +376,8 @@ function attachSaveCancelListeners() {
                 deleted: []
             };
             buildTimeline();
-        } else {
-            alert('Ошибка при сохранении');
         }
     });
-
     document.getElementById('seance-cancel').addEventListener('click', () => {
         if (pendingSeances.added.length > 0 || pendingSeances.deleted.length > 0) {
             pendingSeances = {
@@ -435,7 +441,7 @@ function updateFilmSelect() {
         const option = document.createElement('option');
         option.value = film.id;
         option.textContent = film.film_name;
-        filmSelect.appendChild(option);
+        filmSelect.append(option);
     });
     if (currentValue && window.appData.films.some(f => f.id == currentValue)) {
         filmSelect.value = currentValue;

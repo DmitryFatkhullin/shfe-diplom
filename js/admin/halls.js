@@ -1,16 +1,32 @@
 let currentHallId = null;
 let currentHallConfig = null;
 
+function updatePriceFields(hall) {
+    const priceStandart = document.getElementById('price-standart');
+    const priceVip = document.getElementById('price-vip');
+
+    if (priceStandart) priceStandart.value = hall.hall_price_standart;
+    if (priceVip) priceVip.value = hall.hall_price_vip;
+}
+
 function initHallsModule() {
     renderHallsList();
     fillHallSelects();
     attachHallEvents();
     attachHallInputListeners();
+
     setTimeout(() => {
         const configContainer = document.getElementById('config-hall-select');
         const firstHallElement = configContainer?.querySelector('.hall-item-select');
         if (firstHallElement) {
             firstHallElement.click();
+        }
+    }, 100);
+    setTimeout(() => {
+        const priceContainer = document.getElementById('price-hall-select');
+        const firstPriceElement = priceContainer?.querySelector('.hall-item-select');
+        if (firstPriceElement) {
+            firstPriceElement.click();
         }
     }, 100);
 }
@@ -25,12 +41,11 @@ function renderHallsList() {
             <span>${hall.hall_name}</span>
             <span class="hall-item__delete" data-id="${hall.id}">✕</span>
         `;
-        container.appendChild(item);
+        container.append(item);
     });
 }
 
 function fillHallSelects() {
-
     function extractAllHalls(data) {
         const flatList = [];
         function extract(item) {
@@ -64,8 +79,8 @@ function fillHallSelects() {
             if (id === 'open-hall-select') {
                 const statusSpan = document.createElement('span');
                 statusSpan.className = `status-indicator ${hall.hall_open === 1 ? 'status-open' : 'status-closed'}`;
-                hallElement.appendChild(statusSpan);
-                hallElement.appendChild(document.createTextNode(' ' + hall.hall_name));
+                hallElement.append(statusSpan);
+                hallElement.append(document.createTextNode(' ' + hall.hall_name));
             } else {
                 hallElement.textContent = hall.hall_name;
             }
@@ -91,6 +106,7 @@ function fillHallSelects() {
                 } else if (id === 'open-hall-select') {
                     const openSalesBtn = document.getElementById('open-sales');
                     openSalesBtn.textContent = hall.hall_open === 1 ? 'ПРИОСТАНОВИТЬ ПРОДАЖУ БИЛЕТОВ' : 'ОТКРЫТЬ ПРОДАЖУ БИЛЕТОВ';
+                    updateSalesStatusText(hall);
                     if (hall.hall_open === 1) {
                         openSalesBtn.classList.remove('btn--primary-open-ticket-sales');
                         openSalesBtn.classList.add('btn--primary-close-ticket-sales');
@@ -100,7 +116,7 @@ function fillHallSelects() {
                     }
                 }
             });
-            container.appendChild(hallElement);
+            container.append(hallElement);
         });
         if (window.appData.halls.length > 0) {
             const firstElement = container.querySelector('.hall-item-select');
@@ -111,7 +127,6 @@ function fillHallSelects() {
         }
     });
 }
-
 
 function attachHallInputListeners() {
     const rowsInput = document.getElementById('config-rows');
@@ -129,7 +144,6 @@ function attachHallInputListeners() {
         });
     }
 }
-
 
 function updateHallConfigSize() {
     const newRows = parseInt(document.getElementById('config-rows').value);
@@ -159,7 +173,6 @@ function updateHallConfigSize() {
 }
 
 function attachHallEvents() {
-
     document.querySelectorAll('.hall-item__delete').forEach(btn => {
         btn.addEventListener('click', async (e) => {
             const id = e.target.dataset.id;
@@ -171,8 +184,6 @@ function attachHallEvents() {
             }
         });
     });
-
-
     document.getElementById('add-hall-submit').addEventListener('click', async () => {
         const name = document.getElementById('new-hall-name').value.trim();
         if (!name) return;
@@ -183,45 +194,50 @@ function attachHallEvents() {
             bootstrap.Modal.getInstance(document.getElementById('addHallModal')).hide();
         }
     });
-
     document.getElementById('config-cancel').addEventListener('click', () => {
         if (currentHallId) {
             loadHallConfigForEdit(currentHallId);
         }
     });
-
     document.getElementById('config-save').addEventListener('click', async () => {
         if (!currentHallId) return;
-        const rows = parseInt(document.getElementById('config-rows').value);
-        const places = parseInt(document.getElementById('config-places').value);
+        const rowsInput = document.getElementById('config-rows');
+        const placesInput = document.getElementById('config-places');
+        const rowsValid = validatePositiveInteger(rowsInput, 'Количество рядов', 1);
+        const placesValid = validatePositiveInteger(placesInput, 'Количество мест', 1);
+        if (!rowsValid || !placesValid) return;
+        const rows = parseInt(rowsInput.value);
+        const places = parseInt(placesInput.value);
         const config = getCurrentHallConfig();
         const result = await api.updateHallConfig(currentHallId, rows, places, config);
         if (result.success) {
-            alert('Конфигурация сохранена');
             const idx = window.appData.halls.findIndex(h => h.id == currentHallId);
             if (idx !== -1) window.appData.halls[idx] = result.result;
             currentHallConfig = result.result.hall_config;
+            clearError(rowsInput);
+            clearError(placesInput);
         }
     });
-
     document.getElementById('price-save').addEventListener('click', async () => {
         const container = document.getElementById('price-hall-select');
         const activeHall = container.querySelector('.hall-item-select.active');
-        if (!activeHall) {
-            alert('Выберите зал');
-            return;
-        }
+        if (!activeHall) return;
+        const priceStdInput = document.getElementById('price-standart');
+        const priceVipInput = document.getElementById('price-vip');
+        const stdValid = validateNonNegative(priceStdInput, 'Цена обычных мест');
+        const vipValid = validateNonNegative(priceVipInput, 'Цена VIP мест');
+        if (!stdValid || !vipValid) return;
         const hallId = activeHall.dataset.id;
-        const priceStd = parseInt(document.getElementById('price-standart').value);
-        const priceVip = parseInt(document.getElementById('price-vip').value);
+        const priceStd = parseInt(priceStdInput.value);
+        const priceVip = parseInt(priceVipInput.value);
         const result = await api.updateHallPrice(hallId, priceStd, priceVip);
         if (result.success) {
-            alert('Цены обновлены');
             const idx = window.appData.halls.findIndex(h => h.id == hallId);
             if (idx !== -1) window.appData.halls[idx] = result.result;
+            clearError(priceStdInput);
+            clearError(priceVipInput);
         }
     });
-
     document.getElementById('price-cancel').addEventListener('click', () => {
         const container = document.getElementById('price-hall-select');
         const activeHall = container.querySelector('.hall-item-select.active');
@@ -235,12 +251,10 @@ function attachHallEvents() {
             document.getElementById('price-vip').value = hall.hall_price_vip;
         }
     });
-
     document.getElementById('open-sales').addEventListener('click', async () => {
         const container = document.getElementById('open-hall-select');
         const activeHall = container.querySelector('.hall-item-select.active');
         if (!activeHall) {
-            alert('Выберите зал');
             return;
         }
         let hallId = activeHall.dataset.id;
@@ -253,7 +267,6 @@ function attachHallEvents() {
             }
         }
         if (!hallId || hallId === 'undefined') {
-            alert('Ошибка: ID зала не определен');
             return;
         }
         const hallIdNum = parseInt(hallId);
@@ -277,19 +290,13 @@ function attachHallEvents() {
             }
             return null;
         }
-
         const hall = findHallRecursive(window.appData.halls, hallIdNum);
         if (!hall) {
-            console.error('Зал не найден в данных');
-            alert('Зал не найден');
             return;
         }
-
         const newStatus = hall.hall_open === 1 ? 0 : 1;
         const result = await api.setHallOpen(hallIdNum, newStatus);
         if (result.success) {
-            alert(newStatus ? 'Продажи открыты' : 'Продажи закрыты');
-
             function extractAllHalls(data) {
                 const flatList = [];
                 function extract(item) {
@@ -312,6 +319,10 @@ function attachHallEvents() {
                 h.id === hallIdNum ? result.result : h
             );
             window.appData.halls = updatedHalls;
+            const statusText = document.getElementById('sales-status-text');
+            if (statusText) {
+                statusText.textContent = newStatus ? 'Зал открыт для продаж' : 'Всё готово к открытию';
+            }
             const openSalesBtn = document.getElementById('open-sales');
             openSalesBtn.textContent = newStatus ? 'ПРИОСТАНОВИТЬ ПРОДАЖУ БИЛЕТОВ' : 'ОТКРЫТЬ ПРОДАЖУ БИЛЕТОВ';
             if (newStatus) {
@@ -358,12 +369,18 @@ function renderHallEditor(config) {
                     currentHallConfig[rowIdx][placeIdx] = newType;
                 }
             });
-            rowDiv.appendChild(cell);
+            rowDiv.append(cell);
         });
-        container.appendChild(rowDiv);
+        container.append(rowDiv);
     });
 }
 
 function getCurrentHallConfig() {
     return currentHallConfig;
+}
+
+function updateSalesStatusText(hall) {
+    const statusText = document.getElementById('sales-status-text');
+    if (!statusText) return;
+    statusText.textContent = hall.hall_open === 1 ? 'Зал открыт для продаж' : 'Всё готово к открытию';
 }

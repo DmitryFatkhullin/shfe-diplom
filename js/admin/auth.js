@@ -6,7 +6,5 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
 	if (result.success) {
 		localStorage.setItem('adminAuth', 'true');
 		window.location.href = 'dashboard.html';
-	} else {
-		alert('Ошибка авторизации');
-	}
+	} 
 });

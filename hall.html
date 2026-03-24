@@ -8,10 +8,13 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body class="page">
     <header class="header">
         <div class="container">
-            <h1 class="header__title">ИДЁМ<span class="light">В</span>КИНО</h1>
+            <a href="index.html" class="header__logo-link">
+                <img src="assets/logo.png" alt="Идём в кино" class="logo-img">
+            </a>
         </div>
     </header>
     <main class="container-hall">
@@ -23,27 +26,33 @@
                 <p><span class="seance-hall"><span id="hall-name"></span></span></p>
             </div>
             <div class="col-md-1 hall-scheme-col hall-scheme-col-icon"><img src="assets/buying__info-hint.jpg"
-                    alt="Тапните дважды, чтобы увеличить"></div>
-        </div>
-        <div class="hall-scheme" id="hall-scheme"></div>
-        <div class="legend" id="legend">
-            <div class="legend-row">
-                <div class="legend-item">
-                    <span class="legend-color legend-color--standart"></span><span class="legend-color-text"
-                        id="standart-price"> Свободно <span class="standart-price"></span></span>
-                </div>
-                <div class="legend-item">
-                    <span class="legend-color legend-color--taken"></span><span class="legend-color-text"> Занято</span>
-                </div>
+                    alt="Тапните дважды, чтобы увеличить">
+                <p class="hall-scheme-icon-text">Тапните дважды, чтобы увеличить</p>
             </div>
-            <div class="legend-row">
-                <div class="legend-item">
-                    <span class="legend-color legend-color--vip"></span><span class="legend-color-text" id="vip-price">
-                        Свободно VIP <span class="vip-price"></span></span>
+        </div>
+        <div class="container-hall-background">
+            <div class="hall-scheme" id="hall-scheme"></div>
+            <div class="legend" id="legend">
+                <div class="legend-row">
+                    <div class="legend-item">
+                        <span class="legend-color legend-color--standart"></span><span class="legend-color-text"
+                            id="standart-price"> Свободно <span class="standart-price"></span></span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color legend-color--vip"></span><span class="legend-color-text"
+                            id="vip-price">
+                            Свободно VIP <span class="vip-price"></span></span>
+                    </div>
                 </div>
-                <div class="legend-item">
-                    <span class="legend-color legend-color--selected"></span><span class="legend-color-text">
-                        Выбрано</span>
+                <div class="legend-row">
+                    <div class="legend-item">
+                        <span class="legend-color legend-color--taken"></span><span class="legend-color-text">
+                            Занято</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color legend-color--selected"></span><span class="legend-color-text">
+                            Выбрано</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -57,4 +66,5 @@
     <script src="js/utils.js"></script>
     <script src="js/guest/hall.js"></script>
 </body>
+
 </html>
