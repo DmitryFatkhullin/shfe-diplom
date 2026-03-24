@@ -1432,4 +1432,8 @@ select.error {
     .btn--primary-add-film {
         margin-left: 31px;
     }
+
+    .admin-header {
+        text-align: center;
+    }
 }
