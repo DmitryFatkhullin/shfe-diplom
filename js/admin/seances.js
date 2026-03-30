@@ -308,23 +308,39 @@ function buildTimeline() {
             e.stopPropagation();
             zone.classList.remove('drag-over');
             zone.classList.add('hidden');
+
             const seanceId = e.dataTransfer.getData('seanceId');
             const isPending = e.dataTransfer.getData('isPending');
             const hallId = e.dataTransfer.getData('hallId');
             const filmId = e.dataTransfer.getData('filmId');
             const time = e.dataTransfer.getData('time');
             const zoneHallId = zone.dataset.hallId;
+
             if (!seanceId || hallId !== zoneHallId) return;
+            window.pendingDeleteSeance = {
+                seanceId,
+                isPending,
+                hallId,
+                filmId,
+                time
+            };
+            let filmName = 'этот фильм';
             if (isPending === 'true') {
-                pendingSeances.added = pendingSeances.added.filter(item =>
-                    !(item.hallId == hallId && item.filmId == filmId && item.time == time)
-                );
+                const film = window.appData.films.find(f => f.id == filmId);
+                if (film) filmName = film.film_name;
             } else {
-                if (!pendingSeances.deleted.includes(seanceId)) {
-                    pendingSeances.deleted.push(seanceId);
+                const seance = window.appData.seances.find(s => s.id == seanceId);
+                if (seance) {
+                    const film = window.appData.films.find(f => f.id == seance.seance_filmid);
+                    if (film) filmName = film.film_name;
                 }
             }
-            buildTimeline();
+            const filmNameSpan = document.getElementById('delete-film-name');
+            if (filmNameSpan) {
+                filmNameSpan.textContent = filmName;
+            }
+            const deleteModal = new bootstrap.Modal(document.getElementById('deleteSeanceModal'));
+            deleteModal.show();
         };
         zone.addEventListener('dragover', zone._dragoverHandler);
         zone.addEventListener('dragleave', zone._dragleaveHandler);
@@ -447,3 +463,28 @@ function updateFilmSelect() {
         filmSelect.value = currentValue;
     }
 }
+
+
+document.getElementById('confirm-delete-seance').addEventListener('click', async () => {
+    const deleteData = window.pendingDeleteSeance;
+    if (!deleteData) return;
+
+    const { seanceId, isPending, hallId, filmId, time } = deleteData;
+
+    if (isPending === 'true') {
+        pendingSeances.added = pendingSeances.added.filter(item =>
+            !(item.hallId == hallId && item.filmId == filmId && item.time == time)
+        );
+    } else {
+        if (!pendingSeances.deleted.includes(seanceId)) {
+            pendingSeances.deleted.push(seanceId);
+        }
+    }
+    const modal = bootstrap.Modal.getInstance(document.getElementById('deleteSeanceModal'));
+    modal.hide();
+    window.pendingDeleteSeance = null;
+    buildTimeline();
+});
+document.getElementById('deleteSeanceModal').addEventListener('hidden.bs.modal', () => {
+    window.pendingDeleteSeance = null;
+});

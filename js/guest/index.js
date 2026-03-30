@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 backButton.className = 'dates__item dates__item--prev-button';
                 backButton.innerHTML = '&lt;';
                 backButton.addEventListener('click', scrollPrev);
-                datesContainer.appendChild(backButton);
+                datesContainer.append(backButton);
                 return;
             }
             const dateEl = document.createElement('div');
@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 renderDates();
                 loadFilms();
             });
-            datesContainer.appendChild(dateEl);
+            datesContainer.append(dateEl);
         });
         const remainingSlots = 6 - datesContainer.children.length;
         for (let i = 0; i < remainingSlots; i++) {
@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             emptySlot.className = 'dates__item';
             emptySlot.style.visibility = 'hidden';
             emptySlot.style.pointerEvents = 'none';
-            datesContainer.appendChild(emptySlot);
+            datesContainer.append(emptySlot);
         }
     }
 

@@ -6,6 +6,8 @@
     background-color: rgba(0, 0, 0, 0.5);
     background-blend-mode: multiply;
     font-family: 'Roboto', sans-serif;
+    background-repeat: no-repeat;
+    min-height: 100vh;
 }
 
 .admin-page-login {
@@ -58,25 +60,57 @@
     padding-right: 0;
 }
 
+.admin-section:not(:last-child) .admin-dashboard-section__title-text::before {
+    content: '';
+    position: absolute;
+    left: 61px;
+    top: auto;
+    bottom: auto;
+    width: 2px;
+    height: calc(34px);
+    background-color: #BC95D6;
+    pointer-events: none;
+    z-index: 1;
+    margin-top: 34px;
+}
+
+.admin-section:nth-child(3) .admin-dashboard-section__title-text::after {
+    content: '';
+    position: absolute;
+    left: 61px;
+    top: auto;
+    bottom: auto;
+    width: 2px;
+    height: calc(34px);
+    background-color: #BC95D6;
+    pointer-events: none;
+    z-index: 1;
+    margin-top: -41px;
+}
+
+
 .admin-section:not(:last-child) .accordion-content::before {
     content: '';
     position: absolute;
     left: 61px;
-    top: 60px;
+    top: auto;
+    bottom: auto;
     width: 2px;
-    height: calc(312px);
+    height: calc(286px);
     background-color: #BC95D6;
     pointer-events: none;
     z-index: 1;
+    margin-top: -55px;
 }
 
 .admin-section:nth-child(2) .accordion-content::before {
     content: '';
     position: absolute;
     left: 61px;
-    top: 60px;
+    top: auto;
+    bottom: auto;
     width: 2px;
-    height: calc(852px);
+    height: 95.6%;
     background-color: #BC95D6;
     pointer-events: none;
     z-index: 1;
@@ -86,24 +120,28 @@
     content: '';
     position: absolute;
     left: 61px;
-    top: 60px;
+    top: auto;
+    bottom: auto;
     width: 2px;
-    height: calc(435px);
+    height: calc(437px);
     background-color: #BC95D6;
     pointer-events: none;
     z-index: 1;
+    margin-top: -17px;
 }
 
 .admin-section:nth-child(4) .accordion-content::before {
     content: '';
     position: absolute;
     left: 61px;
-    top: 60px;
+    top: auto;
+    bottom: auto;
     width: 2px;
-    height: calc(820px);
+    height: calc(708px);
     background-color: #BC95D6;
     pointer-events: none;
     z-index: 1;
+    margin-top: -69px;
 }
 
 .admin-login-section__title {
@@ -227,7 +265,8 @@
     border: none;
     border-radius: 4px;
     cursor: pointer;
-
+    padding-left: 31px;
+    padding-right: 31px;
 }
 
 .btn--primary-open-ticket-sales:hover {
@@ -617,14 +656,9 @@ input::-webkit-inner-spin-button {
 }
 
 .btn-secondary-save:hover {
-    font-size: 14px;
-    line-height: 16px;
-    font-weight: 500;
-    margin: 0;
     background: #16A6AF;
     color: #FFFFFF;
-    height: 40px;
-    border: 1px solid #0000003D;
+    border: none;
 }
 
 .admin-dashboard-section-configuration-text {
@@ -1129,6 +1163,16 @@ input::-webkit-inner-spin-button {
     transform: rotate(180deg);
 }
 
+.btn-primary-delete-seanses {
+    padding-left: 35px;
+    padding-right: 35px;
+}
+
+.btn-secondary-delete-seanses {
+    padding-left: 35px;
+    padding-right: 35px;
+}
+
 input.error,
 textarea.error,
 select.error {
@@ -1398,18 +1442,22 @@ select.error {
 
     .container-admin-header {
         padding-left: 14px;
+        text-align: left;
     }
 
     .login-form-email {
-        margin-left: 124px;
+        margin-left: auto;
+        margin-right: auto;
     }
 
     .login-form-password {
-        margin-left: 124px;
+        margin-left: auto;
+        margin-right: auto;
     }
 
     .btn--primary-authorization {
-        margin-left: 163px;
+        margin-left: auto;
+        margin-right: auto;
     }
 
     .admin-section:not(:last-child) .accordion-content::before {
@@ -1435,5 +1483,43 @@ select.error {
 
     .admin-header {
         text-align: center;
+        padding-top: 14px;
+        padding-bottom: 14px;
+    }
+
+    .btn--primary-create-hall {
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 20px;
+    }
+
+    .admin-section:not(:last-child) .admin-dashboard-section__title-text::before {
+        content: '';
+        position: absolute;
+        left: 61px;
+        top: auto;
+        bottom: auto;
+        width: 2px;
+        height: calc(34px);
+        background-color: #BC95D6;
+        pointer-events: none;
+        z-index: 1;
+        margin-top: 34px;
+        opacity: 0;
+    }
+
+    .admin-section:nth-child(3) .admin-dashboard-section__title-text::after {
+        content: '';
+        position: absolute;
+        left: 61px;
+        top: auto;
+        bottom: auto;
+        width: 2px;
+        height: calc(34px);
+        background-color: #BC95D6;
+        pointer-events: none;
+        z-index: 1;
+        margin-top: -41px;
+        opacity: 0;
     }
 }

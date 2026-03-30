@@ -26,13 +26,13 @@ document.addEventListener('DOMContentLoaded', () => {
     container.innerHTML = `
         <h2 class="ticket__title">ЭЛЕКТРОННЫЙ БИЛЕТ</h2>
         <div class="ticket__info">
-            <p class="text-ticket-info">На фильм: <strong>${filmName}</strong></p>
-            <p class="text-ticket-info">Места: <strong>${placesList}</strong></p>
-            <p class="text-ticket-info">В зале: <strong>${hallName}</strong></p>
-            <p class="text-ticket-info">Начало сеанса: <strong>${time}</strong></p>
+            <div class="text-ticket-info">На фильм: <span class="ticket__title-text">${filmName}</span></div>
+            <div class="text-ticket-info">Места: <span class="ticket__title-text">${placesList}</span></div>
+            <div class="text-ticket-info">В зале: <span class="ticket__title-text">${hallName}</span></div>
+            <div class="text-ticket-info">Начало сеанса: <span class="ticket__title-text">${time}</span></div>
         </div>
         <div class="ticket__qrcode" id="qrcode"></div>
-        <p class="mt-4 text-muted text-booking-info-bottom-first-str">Покажите QR-код нашему контроллеру для подтверждения бронирования.<p class="mt-4 text-muted text-booking-info-bottom-second-str">Приятного просмотра!</p></p>
+        <p class="mt-4 text-muted text-booking-info-bottom-first-str">Покажите QR-код нашему контроллеру для подтверждения бронирования.<p class="mt-4 text-muted text-booking-info-bottom-second-str">Приятного просмотра!</p>
     `;
     try {
         if (typeof QRCode === 'undefined') {
@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
         canvas.id = 'qr-canvas';
         canvas.width = 200;
         canvas.height = 200;
-        qrContainer.appendChild(canvas);
+        qrContainer.append(canvas);
         QRCode.toCanvas(canvas, qrText, { width: 200 }, function (error) {
             if (error) {
                 console.error('Ошибка создания QR-кода:', error);

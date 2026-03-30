@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     emptyDiv.style.margin = '0 2px';
                     emptyDiv.style.visibility = 'hidden';
                     emptyDiv.style.pointerEvents = 'none';
-                    rowDiv.appendChild(emptyDiv);
+                    rowDiv.append(emptyDiv);
                     return;
                 }
 

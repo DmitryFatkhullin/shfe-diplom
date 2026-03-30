@@ -26,7 +26,7 @@
             <div class="accordion-content">
                 <p class="admin-dashboard-section__text">Доступные залы:</p>
                 <div class="halls-list" id="halls-list"></div>
-                <button class="btn btn--primary" data-bs-toggle="modal" data-bs-target="#addHallModal">СОЗДАТЬ
+                <button class="btn btn--primary btn--primary-create-hall" data-bs-toggle="modal" data-bs-target="#addHallModal">СОЗДАТЬ
                     ЗАЛ</button>
             </div>
         </section>
@@ -242,6 +242,25 @@
             </div>
         </div>
     </div>
+<div class="modal fade" id="deleteSeanceModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">УДАЛЕНИЕ СЕАНСА</h5>
+                <button type="button" class="modal-close-custom" data-bs-dismiss="modal">
+                    <img src="../assets/close-icon.png" alt="Закрыть">
+                </button>
+            </div>
+            <div class="modal-body">
+               <p id="delete-seance-message">Вы действительно хотите снять с сеанса фильм <strong id="delete-film-name"></strong>?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger btn-primary btn-primary-delete-seanses" id="confirm-delete-seance">УДАЛИТЬ</button>
+                <button type="button" class="btn btn-secondary btn-secondary-delete-seanses" data-bs-dismiss="modal">ОТМЕНИТЬ</button>
+            </div>
+        </div>
+    </div>
+</div>
     <div class="modal fade" id="addSeanceModal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">

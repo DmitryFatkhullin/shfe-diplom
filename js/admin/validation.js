@@ -10,7 +10,7 @@ function showError(input, message) {
     const errorDiv = document.createElement('div');
     errorDiv.className = 'error-message';
     errorDiv.textContent = message;
-    input.parentNode.appendChild(errorDiv);
+    input.parentNode.append(errorDiv);
 }
 
 function validatePositiveInteger(input, fieldName, minValue = 1) {

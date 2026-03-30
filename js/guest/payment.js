@@ -7,11 +7,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const infoDiv = document.getElementById('booking-info');
     const total = booking.places.reduce((sum, p) => sum + p.price, 0);
     infoDiv.innerHTML = `
-        <p class="text-booking-info">На фильм:<strong> ${booking.film}</strong></p>
-        <p class="text-booking-info">Места:<strong> ${booking.places.map(p => p.place).join(', ')}</strong></p>
-        <p class="text-booking-info">В зале:<strong> ${booking.hall}</strong></p>
-        <p class="text-booking-info">Начало сеанса:<strong> ${booking.time}</strong></p>
-        <p class="text-booking-info">Стоимость:<strong> ${total}</strong> рублей</p>
+        <div class="text-booking-info">На фильм:<span class="text-booking-info-bold"> ${booking.film}</span></div>
+        <div class="text-booking-info">Места:<span class="text-booking-info-bold"> ${booking.places.map(p => p.place).join(', ')}</strong></div>
+        <div class="text-booking-info">В зале:<span class="text-booking-info-bold"> ${booking.hall}</span></div>
+        <div class="text-booking-info">Начало сеанса:<span class="text-booking-info-bold"> ${booking.time}</span></div>
+        <div class="text-booking-info">Стоимость:<span class="text-booking-info-bold"> ${total}</span> рублей</div>
     `;
 
     document.getElementById('confirm-btn').addEventListener('click', async () => {
